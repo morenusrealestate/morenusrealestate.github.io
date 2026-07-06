@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>9007 Hendrix Road NE | Morenus Real Estate</title>
+  <meta name="description" content="2 bed, 2 bath townhouse at 9007 Hendrix Road NE, Albuquerque, NM 87111. Listed at $289,000 by Morenus Real Estate." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* Gallery styles */
+    .gallery-hero {
+      position: relative;
+      aspect-ratio: 16/9;
+      max-height: 560px;
+      overflow: hidden;
+      background: #000;
+      cursor: pointer;
+    }
+
+    .gallery-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(14,31,61,0.7);
+      color: #fff;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+
+    .gallery-nav:hover { background: rgba(14,31,61,0.95); }
+    .gallery-nav.prev { left: 16px; }
+    .gallery-nav.next { right: 16px; }
+
+    .gallery-counter {
+      position: absolute;
+      bottom: 16px;
+      right: 20px;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      font-size: 0.82rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .gallery-thumbs {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .gallery-thumb {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 2px;
+    }
+
+    .gallery-thumb.active {
+      border-color: var(--gold);
+    }
+
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.2s;
+    }
+
+    .gallery-thumb:hover img { opacity: 0.85; }
+
+    /* Listing detail layout */
+    .listing-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 48px;
+      margin-top: 48px;
+    }
+
+    .listing-price-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .detail-price {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .detail-address {
+      font-size: 1rem;
+      color: var(--grey-text);
+      margin-top: 4px;
+    }
+
+    .detail-specs {
+      display: flex;
+      gap: 28px;
+      margin: 24px 0;
+      padding: 20px 0;
+      border-top: 1px solid rgba(14,31,61,0.08);
+      border-bottom: 1px solid rgba(14,31,61,0.08);
+    }
+
+    .detail-spec {
+      text-align: center;
+    }
+
+    .detail-spec-val {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .detail-spec-label {
+      font-size: 0.78rem;
+      color: var(--grey-text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+
+    .detail-features {
+      margin-top: 28px;
+    }
+
+    .detail-features h3 {
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+    }
+
+    .feature-item::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 2px;
+      flex-shrink: 0;
+      transform: rotate(45deg);
+    }
+
+    /* Sidebar */
+    .listing-sidebar {
+      position: sticky;
+      top: 88px;
+    }
+
+    .contact-card {
+      background: var(--white);
+      border: 1px solid rgba(14,31,61,0.08);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .agent-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .agent-photo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .agent-name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .agent-title {
+      font-size: 0.8rem;
+      color: var(--gold);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .contact-card .btn {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .contact-card-divider {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--grey-text);
+      margin: 14px 0;
+      position: relative;
+    }
+
+    .contact-card-divider::before,
+    .contact-card-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: rgba(14,31,61,0.1);
+    }
+    .contact-card-divider::before { left: 0; }
+    .contact-card-divider::after { right: 0; }
+
+    .mls-note {
+      font-size: 0.78rem;
+      color: var(--grey-text);
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 2px;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      color: #fff;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: none;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      font-size: 1.6rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-nav.prev { left: 16px; }
+    .lightbox-nav.next { right: 16px; }
+
+    @media (max-width: 900px) {
+      .listing-detail-grid {
+        grid-template-columns: 1fr;
+      }
+      .listing-sidebar {
+        position: static;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Morenus Real Estate logo" />
+        <span class="nav-logo-text">Morenus Real Estate</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="listings.html" class="active">Listings</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:+15056205504" class="nav-phone">(505) 620-5504</a>
+        <a href="contact.html" class="btn btn-primary">Get In Touch</a>
+        <button class="nav-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Page header -->
+  <section class="page-header" style="padding: 48px 0 36px;">
+    <div class="container">
+      <span class="eyebrow">Pending</span>
+      <h1 style="font-size: clamp(1.6rem, 3vw, 2.4rem);">9007 Hendrix Road NE</h1>
+      <div class="breadcrumb"><a href="index.html">Home</a> / <a href="listings.html">Listings</a> / 9007 Hendrix Road NE</div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <div style="background: #111; padding: 0;">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 0 24px;">
+      <div class="gallery-hero" id="galleryHero">
+        <img id="heroImg" src="images/listings/hendrix/hendrix_01_exterior.jpg" alt="9007 Hendrix Road NE exterior" />
+        <button class="gallery-nav prev" onclick="changePhoto(-1)" aria-label="Previous photo">&#8249;</button>
+        <button class="gallery-nav next" onclick="changePhoto(1)" aria-label="Next photo">&#8250;</button>
+        <div class="gallery-counter"><span id="photoNum">1</span> / 20</div>
+      </div>
+      <div class="gallery-thumbs" id="thumbGrid"></div>
+    </div>
+  </div>
+
+  <!-- Detail content -->
+  <section style="padding: 0 0 80px;">
+    <div class="container">
+      <div class="listing-detail-grid">
+
+        <!-- Main content -->
+        <div>
+          <div class="listing-price-bar">
+            <div>
+              <div class="detail-price">$289,000</div>
+              <div class="detail-address">9007 Hendrix Road NE, Albuquerque, NM 87111</div>
+            </div>
+            <span class="listing-tag tag-pending" style="position:static; font-size: 0.85rem; padding: 8px 16px;">Pending</span>
+          </div>
+
+          <div class="detail-specs">
+            <div class="detail-spec">
+              <div class="detail-spec-val">2</div>
+              <div class="detail-spec-label">Bedrooms</div>
+            </div>
+            <div class="detail-spec">
+              <div class="detail-spec-val">2</div>
+              <div class="detail-spec-label">Bathrooms</div>
+            </div>
+            <div class="detail-spec">
+              <div class="detail-spec-val">1,236</div>
+              <div class="detail-spec-label">Sq Ft</div>
+            </div>
+            <div class="detail-spec">
+              <div class="detail-spec-val">Town</div>
+              <div class="detail-spec-label">home</div>
+            </div>
+          </div>
+
+          <h3 style="margin-bottom: 12px;">About This Property</h3>
+          <p style="color: var(--grey-text); line-height: 1.8;">
+            This unique two-story townhouse in Northeast Albuquerque offers a one-of-a-kind layout with a dramatic spiral staircase, soaring ceilings, and abundant natural light throughout. The home features two covered outdoor spaces including a large private deck and an upper-level balcony with views toward the Sandia Mountains. Inside, you'll find tile flooring throughout, a gas fireplace in the living room, an open kitchen with a pass-through bar, and two well-sized bathrooms with updated lighting. The attached one-car garage provides convenient direct access. A rare find at this price point in 87111.
+          </p>
+
+          <div class="detail-features">
+            <h3>Property Features</h3>
+            <div class="features-grid">
+              <div class="feature-item">Spiral staircase</div>
+              <div class="feature-item">Gas fireplace</div>
+              <div class="feature-item">Covered back deck</div>
+              <div class="feature-item">Upper balcony</div>
+              <div class="feature-item">Mountain views</div>
+              <div class="feature-item">Mini-split A/C units</div>
+              <div class="feature-item">Attached 1-car garage</div>
+              <div class="feature-item">Open kitchen/bar</div>
+              <div class="feature-item">Tile floors throughout</div>
+              <div class="feature-item">2 full bathrooms</div>
+              <div class="feature-item">Dishwasher included</div>
+              <div class="feature-item">Thomas Add Subdivision</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(14,31,61,0.08);">
+            <h3 style="margin-bottom: 16px;">Floor Plan</h3>
+            <img src="images/listings/hendrix/hendrix_floorplan.jpg" alt="Floor plan for 9007 Hendrix Road NE — Floor 1: 631 sq ft, Floor 2: 605 sq ft" style="width:100%; border-radius: var(--radius); border: 1px solid rgba(14,31,61,0.08);" />
+            <p style="font-size:0.8rem; color:var(--grey-text); margin-top: 8px;">Floor 1: 631 sq ft &nbsp;·&nbsp; Floor 2: 605 sq ft &nbsp;·&nbsp; Total liveable area: 1,236 sq ft. All measurements approximate.</p>
+          </div>
+
+          <div style="margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(14,31,61,0.08);">
+            <h3 style="margin-bottom: 12px;">Location</h3>
+            <div class="map-wrap">
+              <iframe
+                src="https://www.google.com/maps?q=9007+Hendrix+Road+NE,+Albuquerque,+NM+87111&output=embed"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Map of 9007 Hendrix Road NE">
+              </iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="listing-sidebar">
+          <div class="contact-card">
+            <div class="agent-row">
+              <img src="images/melissa.jpg" alt="Melissa Morenus" class="agent-photo" />
+              <div>
+                <div class="agent-name">Melissa Morenus</div>
+                <div class="agent-title">Listing Agent</div>
+              </div>
+            </div>
+            <a href="tel:+15056205504" class="btn btn-primary">(505) 620-5504</a>
+            <div class="contact-card-divider">or</div>
+            <a href="mailto:morenusrealestate@gmail.com" class="btn btn-outline-dark">Email Melissa</a>
+            <a href="https://www.flexmls.com/link.html?1zb0mdu6tly1,16,1,43893" target="_blank" class="btn btn-outline-dark" style="margin-top: 10px;">View on MLS</a>
+            <p class="mls-note">MLS# 1106401 &nbsp;·&nbsp; Listed by Morenus Real Estate</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">&#215;</button>
+    <button class="lightbox-nav prev" onclick="lbNav(-1)">&#8249;</button>
+    <img id="lbImg" src="" alt="Property photo" />
+    <button class="lightbox-nav next" onclick="lbNav(1)">&#8250;</button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <img src="images/logo.png" alt="Morenus Real Estate logo" />
+            <span class="footer-logo-text">Morenus Real Estate</span>
+          </div>
+          <p class="footer-tagline">Your Property, Our Priority. Serving Albuquerque and the surrounding communities with honest, local real estate expertise.</p>
+        </div>
+        <div>
+          <div class="footer-heading">Explore</div>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="listings.html">Listings</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-heading">Services</div>
+          <ul class="footer-links">
+            <li><a href="services.html#buying">Buying</a></li>
+            <li><a href="services.html#selling">Selling</a></li>
+            <li><a href="services.html#renting">Renting</a></li>
+            <li><a href="services.html#management">Property Management</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-heading">Contact</div>
+          <ul class="footer-links">
+            <li><a href="tel:+15056205504">(505) 620-5504</a></li>
+            <li><a href="mailto:morenusrealestate@gmail.com">morenusrealestate@gmail.com</a></li>
+            <li>Albuquerque, New Mexico</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2026 Morenus Real Estate. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    const photos = [
+      { src: "images/listings/hendrix/hendrix_01_exterior.jpg", alt: "Exterior at dusk" },
+      { src: "images/listings/hendrix/hendrix_02_backyard.jpg", alt: "Backyard with covered deck" },
+      { src: "images/listings/hendrix/hendrix_03_rear.jpg", alt: "Rear of property" },
+      { src: "images/listings/hendrix/hendrix_04_deck.jpg", alt: "Covered deck" },
+      { src: "images/listings/hendrix/hendrix_05_porch.jpg", alt: "Covered porch entry" },
+      { src: "images/listings/hendrix/hendrix_06_balcony.jpg", alt: "Upper balcony with mountain views" },
+      { src: "images/listings/hendrix/hendrix_07_garage.jpg", alt: "Attached garage" },
+      { src: "images/listings/hendrix/hendrix_08_bath1.jpg", alt: "Bathroom with double vanity" },
+      { src: "images/listings/hendrix/hendrix_09_bath2.jpg", alt: "Second bathroom" },
+      { src: "images/listings/hendrix/hendrix_10_upstairs.jpg", alt: "Upstairs landing" },
+      { src: "images/listings/hendrix/hendrix_11_bedroom.jpg", alt: "Bedroom with closet" },
+      { src: "images/listings/hendrix/hendrix_12_living1.jpg", alt: "Living room with fireplace" },
+      { src: "images/listings/hendrix/hendrix_13_living2.jpg", alt: "Living room" },
+      { src: "images/listings/hendrix/hendrix_14_kitchen1.jpg", alt: "Kitchen" },
+      { src: "images/listings/hendrix/hendrix_15_kitchen2.jpg", alt: "Kitchen with spiral staircase" },
+      { src: "images/listings/hendrix/hendrix_16_kitchen3.jpg", alt: "Kitchen overview" },
+      { src: "images/listings/hendrix/hendrix_17_dining.jpg", alt: "Dining area" },
+      { src: "images/listings/hendrix/hendrix_18_stairs1.jpg", alt: "Spiral staircase" },
+      { src: "images/listings/hendrix/hendrix_19_stairs2.jpg", alt: "Staircase and open living area" },
+      { src: "images/listings/hendrix/hendrix_floorplan.jpg", alt: "Floor plan" },
+    ];
+
+    let current = 0;
+
+    // Build thumbnails
+    const thumbGrid = document.getElementById('thumbGrid');
+    photos.forEach((p, i) => {
+      const div = document.createElement('div');
+      div.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+      div.innerHTML = `<img src="${p.src}" alt="${p.alt}" loading="lazy">`;
+      div.onclick = () => setPhoto(i);
+      thumbGrid.appendChild(div);
+    });
+
+    function setPhoto(i) {
+      current = (i + photos.length) % photos.length;
+      document.getElementById('heroImg').src = photos[current].src;
+      document.getElementById('heroImg').alt = photos[current].alt;
+      document.getElementById('photoNum').textContent = current + 1;
+      document.querySelectorAll('.gallery-thumb').forEach((t, idx) => {
+        t.classList.toggle('active', idx === current);
+      });
+    }
+
+    function changePhoto(dir) { setPhoto(current + dir); }
+
+    // Lightbox
+    document.getElementById('galleryHero').addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON') return;
+      openLightbox();
+    });
+
+    function openLightbox() {
+      document.getElementById('lbImg').src = photos[current].src;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function lbNav(dir) {
+      setPhoto(current + dir);
+      document.getElementById('lbImg').src = photos[current].src;
+    }
+
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'ArrowLeft') lbNav(-1);
+      if (e.key === 'ArrowRight') lbNav(1);
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>
