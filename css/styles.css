@@ -957,6 +957,37 @@ section {
 }
 
 /* ============================================
+   MLS Search Banner
+   ============================================ */
+.mls-banner {
+  background: var(--navy);
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.mls-banner-text h3 {
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.mls-banner-text p {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.95rem;
+  max-width: 480px;
+}
+
+.mls-banner .btn-primary {
+  white-space: nowrap;
+}
+
+/* ============================================
    Filters (Listings page)
    ============================================ */
 .filter-bar {
